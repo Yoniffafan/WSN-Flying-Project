@@ -1,0 +1,18 @@
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\WSN Forest Project.exe.config
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\WSN Forest Project.exe
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\WSN Forest Project.pdb
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\Microsoft.Maps.MapControl.WPF.dll
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\WebEye.Controls.Wpf.WebCameraControl.dll
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\Microsoft.Maps.MapControl.WPF.xml
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\obj\Debug\WSN Forest Project.csprojResolveAssemblyReference.cache
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\obj\Debug\MainWindow.g.cs
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\obj\Debug\App.g.cs
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\obj\Debug\WSN Forest Project_MarkupCompile.cache
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\obj\Debug\WSN Forest Project_MarkupCompile.lref
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\obj\Debug\MainWindow.baml
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\obj\Debug\WSN Forest Project.g.resources
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\obj\Debug\WSN_Forest_Project.Properties.Resources.resources
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\obj\Debug\WSN Forest Project.csproj.GenerateResource.Cache
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\obj\Debug\WSN Forest Project.exe
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\obj\Debug\WSN Forest Project.pdb
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\DynamicDataDisplay.dll
