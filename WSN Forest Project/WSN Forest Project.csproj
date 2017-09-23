@@ -35,8 +35,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml">
+      <HintPath>..\..\ULTRON-GCS\ULTRON\ULTRON 2016\ULTRON 2016\bin\Debug\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="DynamicDataDisplay">
       <HintPath>..\..\DynamicDataDisplay.dll</HintPath>
+    </Reference>
+    <Reference Include="HelixToolkit, Version=2015.1.715.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\packages\HelixToolkit.2015.1.715\lib\portable-net4+sl4+wp71+win8\HelixToolkit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HelixToolkit.Wpf, Version=2015.1.715.0, Culture=neutral, PublicKeyToken=52aa3500039caf0d, processorArchitecture=MSIL">
+      <HintPath>..\packages\HelixToolkit.Wpf.2015.1.715\lib\net45\HelixToolkit.Wpf.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Maps.MapControl.WPF">
       <HintPath>..\..\..\..\ultroon\ULTRON-GCS\ULTRON\ULTRON 2016\packages\Microsoft.Maps.MapControl.WPF.1.0.0.3\lib\net40-Client\Microsoft.Maps.MapControl.WPF.dll</HintPath>
@@ -111,6 +122,8 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Komunikasi1.Designer.cs</LastGenOutput>
     </None>
+    <None Include="packages.config" />
+    <None Include="Plane.3ds" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

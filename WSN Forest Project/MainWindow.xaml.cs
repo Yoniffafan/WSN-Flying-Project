@@ -21,6 +21,10 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using ULTRON_2016;
 using WebEye.Controls.Wpf;
+using HelixToolkit;
+using HelixToolkit.Wpf;
+using Microsoft.Research.DynamicDataDisplay;
+using System.IO;
 
 namespace WSN_Forest_Project
 {
@@ -76,13 +80,15 @@ namespace WSN_Forest_Project
         //private bool GPSstatus = true;
 
         private bool captureFlag = false;
-        private bool kirimFlag = false;
+        //private bool kirimFlag = false;
 
         public int counterPushPin = 0;
         public double goalLat = 0;
         public double goalLong = 0;
 
-        public string logName;
+        public string logName = @"D:\wsnlog " + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Year.ToString() + " " + DateTime.Now.Hour.ToString() + "." + DateTime.Now.Minute.ToString() + "." + DateTime.Now.Second.ToString() + ".txt";
+
+
 
         //MapPolyline myPolyline = new MapPolyline();
 
@@ -100,6 +106,45 @@ namespace WSN_Forest_Project
         {
             InitializeComponent();
             InitializeComboBox();
+
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 0);
+            dispatcherTimer.Tick += dispatcherTimer_Tick;
+            dispatcherTimer.Start();
+
+            sourceYaw.SetXYMapping(p => p);
+            sourcePitch.SetXYMapping(p => p);
+            sourceRoll.SetXYMapping(p => p);
+            sourceElevasi.SetXYMapping(p => p);
+            sourceTinggi.SetXYMapping(p => p);
+
+            dataYaw.SetXYMapping(p => p);
+            dataPitch.SetXYMapping(p => p);
+            dataRoll.SetXYMapping(p => p);
+            dataElevasi.SetXYMapping(p => p);
+            dataTinggi.SetXYMapping(p => p);
+
+            AccPlot.AddLineGraph(sourceYaw, 2, "Yaw (deg/s)");
+            AccPlot.AddLineGraph(sourcePitch, 2, "Pitch (deg/s)");
+            AccPlot.AddLineGraph(sourceRoll, 2, "Roll (deg/s)");
+
+            GyroPlot.AddLineGraph(sourceElevasi, 2, "Elevasi sudut (deg)");
+
+            TinggiPlot.AddLineGraph(sourceTinggi, 2, "Ketinggian (m)");
+
+            AccPlot.Viewport.FitToView();
+            GyroPlot.Viewport.FitToView();
+            TinggiPlot.Viewport.FitToView();
+
+            ObjectForScriptingHelper helper = new ObjectForScriptingHelper(this);
+
+            mySensorLog.No = 0;
+
+            InitializeDataTable();
+
+            //var matrix = model.Transform.Value;
+            //matrix.Rotate(new Quaternion(new Vector3D(0, 0, 1), -90));
+            //model.Transform = new MatrixTransform3D(matrix);
+            //Viewport3D.Camera.LookAt(new Point3D(150, 175, 190), new Vector3D(-1, -1, -1), 0);
         }
 
         #region button
@@ -157,6 +202,106 @@ namespace WSN_Forest_Project
             initHandshakeList();
             initDelay();
         }
+
+        private void visualButton_Click(object sender, RoutedEventArgs e)
+        {
+            tabVisual.Visibility = Visibility.Visible;
+            tabLog.Visibility = Visibility.Hidden;
+            visualButton.Background = ((Brush)(new BrushConverter().ConvertFrom("#FF100D0D")));
+            logButton.Background = ((Brush)(new BrushConverter().ConvertFrom("#FF444444")));
+        }
+
+        private void logButton_Click(object sender, RoutedEventArgs e)
+        {
+            tabVisual.Visibility = Visibility.Hidden;
+            tabLog.Visibility = Visibility.Visible;
+            visualButton.Background = ((Brush)(new BrushConverter().ConvertFrom("#FF444444")));
+            logButton.Background = ((Brush)(new BrushConverter().ConvertFrom("#FF100D0D")));
+        }
+
+        private void btnCapture_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                konekin.tulis("s");
+                terminalText.AppendText("terkirim 's'");
+
+                if (!captureFlag)
+                {
+                    table = new DataTable("WSN Flying Project");
+                    InitializeDataTable();
+                    stopwatch.Reset();
+                    stopwatch.Start();
+                    ClearLog();
+                    mySensorLog.No = 0;
+
+                    captureFlag = true;
+                    btnCapture.Style = (Style)this.Resources["button5"];
+                    datagridLog.ItemsSource = table.AsDataView();
+                }
+                else
+                {
+                    captureFlag = false;
+                    stopwatch.Stop();
+                    intervalCount = 0;
+                    btnCapture.Style = (Style)this.Resources["button5"];
+                    //SaveLog();
+                }
+            }
+            catch
+            {
+                terminalText.AppendText("gagal kirim 's'");
+            }
+            //if (!captureFlag)
+            //{
+            //    table = new DataTable("Komurindo2015");
+            //    InitializeDataTable();
+
+            //    stopwatch.Reset();
+            //    stopwatch.Start();
+            //    ClearLog();
+            //    mySensorLog.No = 0;
+
+            //    captureFlag = true;
+            //    btnCapture.Style = (Style)this.Resources["button2"];
+            //    datagridLog.ItemsSource = table.AsDataView();
+            //}
+            //else
+            //{
+            //    captureFlag = false;
+            //    stopwatch.Stop();
+            //    intervalCount = 0;
+            //    btnCapture.Style = (Style)this.Resources["button1"];
+            //    //SaveLog();
+            //}
+        }
+
+        private void btnPutus_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (captureFlag) btnCapture_Click(sender, e);
+
+            konekin.NewSerialDataReceived -= konekin_NewSerialDataReceived;
+            konekin.komSerial.Close();
+            //konekin.serialLaunch.Close();
+
+            //Button_Click_3(sender, e);
+            terminalText.Text = "";
+            //InitializeEverything();
+
+
+        }
+
+        private void btnPutus_MouseEnter(object sender, MouseEventArgs e)
+        {
+            btnPutus.Content = "Putuskan";
+        }
+
+        private void btnPutus_MouseLeave(object sender, MouseEventArgs e)
+        {
+            btnPutus.Content = "Terhubung ke " + Komunikasi.Default.PortName;
+        }
+
         #endregion
 
         #region init
@@ -170,26 +315,6 @@ namespace WSN_Forest_Project
             baudCombo.SelectedIndex = 11;
         }
 
-        //private void initPortLaunch()
-        //{
-        //    foreach (String s in SerialPort.GetPortNames())
-        //    {
-        //        if (s != "")
-        //        {
-        //            portLauncher.Items.Add("COM" + s.Substring(3));
-        //            portLauncher.SelectedIndex = 0;
-        //        }
-        //        else
-        //        {
-        //            portLauncher.Items.Add("Unknown");
-        //            portLauncher.SelectedIndex = 0;
-        //        }
-        //    }
-        //    if (Komunikasi.Default.PortName != "")
-        //    {
-        //        portCombo.SelectedIndex = 0;
-        //    }
-        //}
 
         private void initComPortList()
         {
@@ -259,6 +384,12 @@ namespace WSN_Forest_Project
             delayCombo.Items.Add("1000 ms");
             delayCombo.SelectedIndex = 0;
         }
+
+        string FormatTime(int number)
+        {
+            if (number < 10) return "0" + number;
+            else return number.ToString();
+        }
         #endregion
 
 
@@ -297,6 +428,49 @@ namespace WSN_Forest_Project
             if (dialog.ShowDialog() == true)
             {
                 webCameraControl.GetCurrentImage().Save(dialog.FileName);
+            }
+        }
+
+        void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            if (stopwatch.IsRunning && stopwatch.ElapsedMilliseconds / interval > intervalCount)
+            {
+                intervalCount = Convert.ToInt32(stopwatch.ElapsedMilliseconds / interval);
+
+                if (konekin.statusKoneksi() && captureFlag)
+                {
+                    try
+                    {
+                        table.Rows.Add(
+                            mySensorLog.No,
+                            float.Parse(lblKetinggian.Content.ToString()),
+                            float.Parse(lblTemperatur.Content.ToString()),
+                            float.Parse(lblTekanan.Content.ToString()),
+                            float.Parse(lblElevasi.Content.ToString()),
+                            //float.Parse(lblLatitude.Content.ToString()),
+                            //float.Parse(lblLongitude.Content.ToString()),
+                            float.Parse(lblYaw.Content.ToString()),
+                            float.Parse(lblPitch.Content.ToString()),
+                            float.Parse(lblRoll.Content.ToString()));
+                        SaveLog();
+
+                        grafikBebas();
+
+                        if (datagridLog.Items.Count > 0)
+                        {
+                            var border = VisualTreeHelper.GetChild(datagridLog, 0) as Decorator;
+
+                            if (border != null)
+                            {
+                                var scroll = border.Child as ScrollViewer;
+                                if (scroll != null) scroll.ScrollToEnd();
+                            }
+                        }
+
+                        mySensorLog.No += (float)interval / 1000;
+                    }
+                    catch { }
+                }
             }
         }
 
@@ -369,22 +543,8 @@ namespace WSN_Forest_Project
             try
             {
                 data = pesan.Split(' ');
-                /*
-                if(data[0] == "1.")
-                {
-                    terminalText.AppendText("\n 1. Latitude: ");
-                }
-                if (data[0] == "2.")
-                {
-                    terminalText.AppendText("\n 1. Longitude: ");
-                }
-                if (data[0] == "3.")
-                {
-                    terminalText.AppendText(p;
-                } */
-                //int jumlData = data.Length;
-                //ULTRON yw pitch roll alti temp lati longi speed jarak
-                if (data[0] == "u")// && kirimFlag) //&& jumlData == 7 && kirimFlag)
+         
+                if (data[0] == "u")
                 {
                     try
                     {
@@ -392,16 +552,18 @@ namespace WSN_Forest_Project
                         {
                             try
                             {
-                                terminalText.AppendText("u" + " " + lblRoll.Content + " " + lblPitch.Content + " " + lblYaw.Content + " " + lblKetinggian.Content + " " + data[5] + " " + data[6] + " " + data[7] + " " + data[8] + Environment.NewLine);
+                                bar();
+                                timer();
+                                terminalText.AppendText("u" + " " + lblYaw.Content + " " + lblPitch.Content + " " + lblRoll.Content + " " + lblKetinggian.Content + " " + data[5] + " " + data[6] + " " + data[7] + " " + data[8] + Environment.NewLine);
                                 // terminalText.AppendText("u" + " " + q0 + " " + q1 + " " + q2 + " " + q3  + Environment.NewLine);
 
                                 terminalText.SelectionStart = terminalText.Text.Length;
                                 terminalText.CaretIndex = terminalText.Text.Length;
                                 terminalText.ScrollToEnd();
 
-                                //timer();
-                                //bar();
-                                //map();
+ 
+
+                                map();
                                 //putar_Rocket3D();
 
                                 /*  dataLat = float.Parse(mySensorLog.Latitude);
@@ -439,6 +601,205 @@ namespace WSN_Forest_Project
                 }
             }
             catch (Exception) { }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            initBaudList();
+            initComPortList();
+            initDatabitsList();
+            initStopbitsList();
+            initParityList();
+            initHandshakeList();
+            initDelay();
+            //initPortLaunch();
+
+            logFileName = "ULTRON Log " + DateTime.Now.Date.ToString("dd-MM-yyyy ") + DateTime.Now.Hour.ToString() + "." + DateTime.Now.Minute.ToString() + "." + DateTime.Now.Second.ToString() + ".xlsx";
+        }
+
+
+
+        #endregion
+
+        #region visualisasi
+        void timer()
+        {
+            lblTimer.Content = FormatTime(stopwatch.Elapsed.Hours) + ":" + FormatTime(stopwatch.Elapsed.Minutes) + ":" + FormatTime(stopwatch.Elapsed.Seconds);
+
+        }
+
+        void bar()
+        {
+            //mySensorLog.q0 = float.Parse(data[9], System.Globalization.CultureInfo.InvariantCulture);
+            mySensorLog.q1 = float.Parse(data[1], System.Globalization.CultureInfo.InvariantCulture);
+            mySensorLog.q2 = float.Parse(data[2], System.Globalization.CultureInfo.InvariantCulture);
+            mySensorLog.q3 = float.Parse(data[3], System.Globalization.CultureInfo.InvariantCulture);
+            //q0 = mySensorLog.q0;
+            q1 = mySensorLog.q1;
+            q2 = mySensorLog.q2;
+            q3 = mySensorLog.q3;
+
+            //roll = (180 / Math.PI) * Math.Atan2(2 * (q1 * q0 + q2 * q3), 1 - 2 * (q1 * q1 - q3 * q3));
+            //pitch = -(180 / Math.PI) * Math.Asin(2 * (q0 * q2 - q3 * q1));
+            //yaw = -(180 / Math.PI) * Math.Atan2(2 * (q0 * q3 + q1 * q2), 1 - 2 * (q2 * q2 + q3 * q3));
+            yaw = q1;
+            pitch = q2;
+            roll = q3;
+            // mySensorLog.Yaw = float.Parse(yaw, System.Globalization.CultureInfo.InvariantCulture);
+            lblYaw.Content = Math.Round(yaw, 2);
+            barYaw.Width = 110 * (yaw + 180) / 360;
+            //yawLog.Add(mySensorLog.Yaw);
+
+            //lblYaw.Content = data[1];// + " deg";
+            //mySensorLog.Yaw = float.Parse(data[1]);
+            //yawLog.Add(mySensorLog.Yaw);
+
+            // mySensorLog.Pitch = float.Parse(data[3], System.Globalization.CultureInfo.InvariantCulture);
+            lblPitch.Content = Math.Round(pitch, 2);
+            barPitch.Width = 110 * (pitch + 180) / 360;
+            //pitchLog.Add(mySensorLog.Pitch);
+            //lblPitch.Content = data[2];// + " deg";
+            //mySensorLog.Pitch = float.Parse(data[2]);
+            //pitchLog.Add(mySensorLog.Pitch);
+
+            //mySensorLog.Roll = float.Parse(data[1], System.Globalization.CultureInfo.InvariantCulture);
+            lblRoll.Content = Math.Round(roll, 2);
+            barRoll.Width = 110 * (roll + 180) / 360;
+            //rollLog.Add(mySensorLog.Roll);
+
+            mySensorLog.Tinggi = float.Parse(data[4], System.Globalization.CultureInfo.InvariantCulture);
+            lblKetinggian.Content = Math.Round(mySensorLog.Tinggi, 2);
+            barKetinggian.Width = 110 * mySensorLog.Tinggi / 50;
+            //tinggiLog.Add(mySensorLog.Ti  nggi);
+
+
+
+            /*     mySensorLog.Percepatan = float.Parse(data[9], System.Globalization.CultureInfo.InvariantCulture);
+                 lblPercepatan.Content = Math.Round(mySensorLog.Percepatan, 2);
+                 barPercepatan.Width = 110 * mySensorLog.Percepatan / 50;
+                 //tinggiLog.Add(mySensorLog.Tinggi);*/
+
+            mySensorLog.Tekanan = float.Parse(data[8], System.Globalization.CultureInfo.InvariantCulture);
+            lblTekanan.Content = Math.Round(mySensorLog.Tekanan, 2);
+            barTekanan.Width = 110 * mySensorLog.Tekanan / 100;
+            //tekananLog.Add(mySensorLog.Tekanan);
+
+            mySensorLog.Suhu = float.Parse(data[7], System.Globalization.CultureInfo.InvariantCulture);
+            lblTemperatur.Content = Math.Round(mySensorLog.Suhu, 2);
+            barTemperatur.Width = 110 * mySensorLog.Suhu / 100;
+            //suhuLog.Add(mySensorLog.Suhu);
+
+            lblElevasi.Content = 90 - Math.Abs(float.Parse(data[2], System.Globalization.CultureInfo.InvariantCulture));
+            mySensorLog.Elevasi = float.Parse(lblElevasi.Content.ToString());
+            barElevasi.Width = 110 * (mySensorLog.Elevasi + 180) / 360;
+            //elevasiLog.Add(mySensorLog.Elevasi);
+
+            mySensorLog.Latitude = float.Parse(data[5], System.Globalization.CultureInfo.InvariantCulture).ToString();
+            mySensorLog.Longitude = float.Parse(data[6], System.Globalization.CultureInfo.InvariantCulture).ToString();
+        }
+        void map()
+        {
+            double latitude = Convert.ToDouble(data[5]);
+            double longitude = Convert.ToDouble(data[6]);
+            location = new Location(latitude, longitude);
+            if (dataPertama)
+            {
+                previousLocation = location;
+                previousI = i;
+                dataPertama = false;
+            }
+            MyPushPin.Location = location;
+            //myPolyline.Locations.Add(new Location(latitude, longitude));
+            //MyMap.Children.Add(myPolyline);
+            MyMap.Center = location;
+            lblLatitude.Content = mySensorLog.Latitude;
+            lblLongitude.Content = mySensorLog.Longitude;
+
+
+        }
+
+        private void grafikBebas()
+        {
+            Point pYaw = new Point(mySensorLog.No, mySensorLog.Yaw);
+            Point pPitch = new Point(mySensorLog.No, mySensorLog.Pitch);
+            Point pRoll = new Point(mySensorLog.No, mySensorLog.Roll);
+            Point pElev = new Point(mySensorLog.No, mySensorLog.Elevasi);
+            Point pTinggi = new Point(mySensorLog.No, mySensorLog.Tinggi);
+
+            try
+            {
+                dataYaw.Collection.Add(pYaw);
+                sourceYaw.Collection.Add(pYaw);
+                if (sourceYaw.Collection.Count >= 20)
+                {
+                    sourceYaw.Collection.RemoveAt(0);
+                }
+
+                dataPitch.Collection.Add(pPitch);
+                sourcePitch.Collection.Add(pPitch);
+                if (sourcePitch.Collection.Count >= 20)
+                {
+                    sourcePitch.Collection.RemoveAt(0);
+                }
+
+                dataRoll.Collection.Add(pRoll);
+                sourceRoll.Collection.Add(pRoll);
+                if (sourceRoll.Collection.Count >= 20)
+                {
+                    sourceRoll.Collection.RemoveAt(0);
+                }
+
+                dataElevasi.Collection.Add(pElev);
+                sourceElevasi.Collection.Add(pElev);
+                if (sourceElevasi.Collection.Count >= 20)
+                {
+                    sourceElevasi.Collection.RemoveAt(0);
+                }
+
+                dataTinggi.Collection.Add(pTinggi);
+                sourceTinggi.Collection.Add(pTinggi);
+                if (sourceTinggi.Collection.Count >= 20)
+                {
+                    sourceTinggi.Collection.RemoveAt(0);
+                }
+            }
+            catch { }
+        }
+        #endregion
+
+        #region data
+        void SaveLog()
+        {
+            try
+            {
+                tableToSave = new DataTable();
+                tableToSave = table.Copy();
+                CreateExcelFile.CreateExcelDocument(tableToSave, logFileName);
+                using (StreamWriter writer = File.AppendText(logName))
+               
+                {
+                    writer.WriteLine("u" + " " + lblYaw.Content + " " + lblPitch.Content + " " + lblRoll.Content + " " + lblKetinggian.Content + " " + data[5] + " " + data[6] + " " + data[7] + " " + data[8] + Environment.NewLine);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal membuat file excel.\r\nPesan kesalahan: " + ex.Message);
+                return;
+            }
+        }
+
+        void InitializeDataTable()
+        {
+
+            table.Columns.Add("Detik");
+            table.Columns.Add("Yaw");
+            table.Columns.Add("Pitch");
+            table.Columns.Add("Roll");
+            table.Columns.Add("Altitude");
+            table.Columns.Add("Longitude");
+            table.Columns.Add("Latitude");
+            table.Columns.Add("Temperature");
+            table.Columns.Add("Tekanan"); //belum fix
         }
 
         void ClearLog()

@@ -16,3 +16,10 @@ D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\obj\Debu
 D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\obj\Debug\WSN Forest Project.exe
 D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\obj\Debug\WSN Forest Project.pdb
 D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\DynamicDataDisplay.dll
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\HelixToolkit.dll
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\HelixToolkit.Wpf.dll
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\HelixToolkit.pdb
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\HelixToolkit.xml
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\HelixToolkit.Wpf.pdb
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\HelixToolkit.Wpf.xml
+D:\Windows\Kuliah\proyek pak dani\WSN Forest Project\WSN Forest Project\bin\Debug\DocumentFormat.OpenXml.dll
