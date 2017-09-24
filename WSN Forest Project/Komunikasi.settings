@@ -23,8 +23,11 @@
     <Setting Name="terkoneksi" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="Delay" Type="System.Int32" Scope="User">
+    <Setting Name="Delay" Type="System.String" Scope="User">
       <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="Launcher" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

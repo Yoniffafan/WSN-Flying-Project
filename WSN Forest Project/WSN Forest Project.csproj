@@ -76,7 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Komunikasi1.Designer.cs">
+    <Compile Include="Komunikasi.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Komunikasi.settings</DependentUpon>
@@ -92,7 +92,6 @@
     </Compile>
     <Compile Include="CreateExcelFile.cs" />
     <Compile Include="KoleksiData.cs" />
-    <Compile Include="Komunikasi.Designer.cs" />
     <Compile Include="Koneksi.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -120,7 +119,7 @@
     </EmbeddedResource>
     <None Include="Komunikasi.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Komunikasi1.Designer.cs</LastGenOutput>
+      <LastGenOutput>Komunikasi.Designer.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
     <None Include="Plane.3ds" />

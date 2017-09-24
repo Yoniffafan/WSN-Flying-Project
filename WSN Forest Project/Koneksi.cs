@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO.Ports;
+using WSN_Forest_Project;
 
 namespace ULTRON_2016
 {
@@ -20,7 +21,7 @@ namespace ULTRON_2016
         {
             public SerialDataEventArgs(string dataInByteArray)
             {
-                Data = dataInByteArray;
+                 Data = dataInByteArray;
             }
 
             /// <summary>

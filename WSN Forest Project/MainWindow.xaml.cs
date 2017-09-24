@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO.Ports;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -113,13 +114,14 @@ namespace WSN_Forest_Project
             dataElevasi.SetXYMapping(p => p);
             dataTinggi.SetXYMapping(p => p);
 
-            AccPlot.AddLineGraph(sourceYaw, 2, "Yaw (deg/s)");
-            AccPlot.AddLineGraph(sourcePitch, 2, "Pitch (deg/s)");
-            AccPlot.AddLineGraph(sourceRoll, 2, "Roll (deg/s)");
+            AccPlot.AddLineGraph(sourceYaw, new Pen(Brushes.Red, 2), new PenDescription("Yaw (deg/s)"));
+            AccPlot.AddLineGraph(sourcePitch, new Pen(Brushes.Yellow, 2), new PenDescription("Pitch (deg/s)"));
+            AccPlot.AddLineGraph(sourceRoll, new Pen(Brushes.Green, 2), new PenDescription("Roll (deg/s)"));
 
-            GyroPlot.AddLineGraph(sourceElevasi, 2, "Elevasi sudut (deg)");
+            GyroPlot.AddLineGraph(sourceElevasi, new Pen(Brushes.Blue, 2), new PenDescription("Elevasi sudut (deg)"));
 
-            TinggiPlot.AddLineGraph(sourceTinggi, 2, "Ketinggian (m)");
+            TinggiPlot.AddLineGraph(sourceTinggi, new Pen(Brushes.Purple, 2), new PenDescription("Ketinggian (m)"));
+
 
             AccPlot.Viewport.FitToView();
             GyroPlot.Viewport.FitToView();
@@ -311,6 +313,26 @@ namespace WSN_Forest_Project
             baudCombo.SelectedIndex = 11;
         }
 
+        private void initPortLaunch()
+        {
+            foreach (String s in SerialPort.GetPortNames())
+            {
+                if (s != "")
+                {
+                    portLauncher.Items.Add("COM" + s.Substring(3));
+                    portLauncher.SelectedIndex = 0;
+                }
+                else
+                {
+                    portLauncher.Items.Add("Unknown");
+                    portLauncher.SelectedIndex = 0;
+                }
+            }
+            if (Komunikasi.Default.PortName != "")
+            {
+                portCombo.SelectedIndex = 0;
+            }
+        }
 
         private void initComPortList()
         {
@@ -385,6 +407,21 @@ namespace WSN_Forest_Project
         {
             if (number < 10) return "0" + number;
             else return number.ToString();
+        }
+
+        void datagrid()
+        {
+            table.Rows.Add(
+                           mySensorLog.No,
+                           yaw,
+                          pitch,
+                          roll,
+                          float.Parse(data[4]),
+                          float.Parse(data[5]),
+                          float.Parse(data[6]),
+                          float.Parse(data[7]),
+                          float.Parse(data[8]));
+  
         }
         #endregion
 
@@ -463,7 +500,7 @@ namespace WSN_Forest_Project
                             float.Parse(lblPitch.Content.ToString()),
                             float.Parse(lblRoll.Content.ToString()));
                         SaveLog();
-
+                        datagrid();
                         grafikBebas();
 
                         if (datagridLog.Items.Count > 0)
@@ -513,6 +550,7 @@ namespace WSN_Forest_Project
             Komunikasi.Default.StopBits = (StopBits)Enum.Parse(typeof(StopBits), stopbitCombo.SelectedItem.ToString());
             Komunikasi.Default.Handshake = (Handshake)Enum.Parse(typeof(Handshake), handshakeCombo.SelectedItem.ToString());
             Komunikasi.Default.Parity = (Parity)Enum.Parse(typeof(Parity), parityCombo.SelectedItem.ToString());
+            Komunikasi.Default.Launcher = Convert.ToString(portLauncher.SelectedItem);
             interval = Convert.ToInt32(Convert.ToString(delayCombo.SelectedItem).Remove(5));
 
             //if (!Komunikasi.Default.terkoneksi)
@@ -621,7 +659,6 @@ namespace WSN_Forest_Project
             initParityList();
             initHandshakeList();
             initDelay();
-            //initPortLaunch();
 
             logFileName = "WSN Log " + DateTime.Now.Date.ToString("dd-MM-yyyy ") + DateTime.Now.Hour.ToString() + "." + DateTime.Now.Minute.ToString() + "." + DateTime.Now.Second.ToString() + ".xlsx";
         }
