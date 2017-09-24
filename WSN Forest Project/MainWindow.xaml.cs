@@ -221,8 +221,8 @@ namespace WSN_Forest_Project
         {
             try
             {
-                konekin.tulis("s");
-                terminalText.AppendText("terkirim 's'");
+                //konekin.tulis("s");
+                //terminalText.AppendText("terkirim 's'");
 
                 if (!captureFlag)
                 {
@@ -234,7 +234,7 @@ namespace WSN_Forest_Project
                     mySensorLog.No = 0;
 
                     captureFlag = true;
-                    btnCapture.Style = (Style)this.Resources["button5"];
+                    btnCapture.Content = "Stop Capture";
                     datagridLog.ItemsSource = table.AsDataView();
                 }
                 else
@@ -242,7 +242,7 @@ namespace WSN_Forest_Project
                     captureFlag = false;
                     stopwatch.Stop();
                     intervalCount = 0;
-                    btnCapture.Style = (Style)this.Resources["button5"];
+                    btnCapture.Content = "Capture";
                     //SaveLog();
                 }
             }

@@ -2184,6 +2184,6 @@
 
         <Button x:Name="btnPutus"  Content="putuskan koneksi" Width="100"  FontFamily="Bernard MT Condensed" FontSize="14"   Click="btnPutus_Click" Background="{x:Null}" BorderBrush="#FF630000" Foreground="#FF630000" Margin="1244,652,22,10" RenderTransformOrigin="1.59,1.557" IsEnabled="True"/>
 
-        <Button x:Name="btnCapture"  Content="capture data" Width="100"  FontFamily="Bernard MT Condensed" FontSize="14" Click="konekButton_Click" Background="{x:Null}" BorderBrush="#FF3295D4" Foreground="#FF3295D4" Margin="1244,538,22,121"/>
+        <Button x:Name="btnCapture"  Content="capture data" Width="100"  FontFamily="Bernard MT Condensed" FontSize="14" Click="btnCapture_Click" Background="{x:Null}" BorderBrush="#FF3295D4" Foreground="#FF3295D4" Margin="1244,538,22,121"/>
     </Grid>
 </Window>
