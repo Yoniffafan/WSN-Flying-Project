@@ -22,10 +22,19 @@
 
 
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="836,151,22,282" Width="508">
-            <ComboBox x:Name="comboBox" Width="206" DisplayMemberPath="Name" SelectionChanged="OnSelectionChanged" Margin="0,299,0,0" />
-            <Button x:Name="startButton" Content="Start" Width="96" Margin="4,0,0,0" IsEnabled="False" Click="OnStartButtonClick" Foreground="#FF040404" Height="36" VerticalAlignment="Bottom" />
-            <Button x:Name="stopButton" Content="Stop" Width="92" Margin="4,299,0,0" IsEnabled="{Binding Path=IsCapturing, ElementName=webCameraControl}" Click="OnStopButtonClick" />
-            <Button x:Name="imageButton" Content="Image..." Width="102" Margin="4,299,0,0" IsEnabled="{Binding IsCapturing, ElementName=webCameraControl}" Click="OnImageButtonClick" />
+            <ComboBox x:Name="comboBox" Width="108" DisplayMemberPath="Name" SelectionChanged="OnSelectionChanged" Margin="0,299,0,0" />
+            <ComboBox x:Name="comboPicture" Width="104" Margin="0,299,0,0" SelectedIndex="0" >
+                <ComboBoxItem Content="capture/s"/>
+                <ComboBoxItem Content="1"/>
+                <ComboBoxItem Content="2"/>
+                <ComboBoxItem Content="3"/>
+                <ComboBoxItem Content="4"/>
+                <ComboBoxItem Content="5"/>
+            </ComboBox>
+            <Button x:Name="startButton" Content="Start" Width="54" Margin="4,0,0,0" IsEnabled="False" Click="OnStartButtonClick" Foreground="#FF040404" Height="36" VerticalAlignment="Bottom" />
+            <Button x:Name="stopButton" Content="Stop" Width="52" Margin="4,299,0,0" IsEnabled="{Binding IsCapturing, ElementName=webCameraControl}" Click="OnStopButtonClick" />
+            <Button x:Name="imageButton" Content="capture" Width="56" Margin="4,299,0,0" IsEnabled="{Binding IsCapturing, ElementName=webCameraControl}" Click="OnImageButtonClick" />
+            <!--<Button x:Name="dirButton" Content="Browse..." Width="64" Margin="4,299,0,0" IsEnabled="{Binding IsCapturing, ElementName=webCameraControl}" Click="dirButton_Click"  />-->
         </StackPanel>
 
         <wpf:WebCameraControl x:Name="webCameraControl" Margin="836,117,22,326" />
@@ -97,9 +106,9 @@
             <Button x:Name="visualButton"  Content="Data Visualization" Click="visualButton_Click" Margin="36,96,1217,643" Background="#FF100D0D" BorderBrush="#FF0281BD" BorderThickness="1,1,1,0" Foreground="#FF0280BD" FontFamily="Source Sans Pro Semibold"/>
             <Button x:Name="logButton"  Content="Saved Data" Click="logButton_Click" Margin="149,96,1093,643" Background="#FF444444" BorderBrush="#FF1B82C2" Foreground="#FF0077C1" BorderThickness="1,1,1,0" FontFamily="Source Sans Pro Semibold"/>
             <Grid x:Name="tabVisual" Grid.ColumnSpan="1" Grid.RowSpan="1">
-                <Grid x:Name="gridKoneksi" Margin="70,261,942,115" >
+                <Grid x:Name="gridKoneksi" Margin="72,260,940,116" >
 
-                    <StackPanel Margin="-34,-136,116,184" >
+                    <StackPanel Margin="-34,-136,116,183" >
                         <StackPanel.Background>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF0F0C0C" Offset="0"/>
@@ -132,7 +141,7 @@
 
 
                     </StackPanel>
-                    <Button x:Name="konekButton"  Content="Hubungkan" Width="100" Height="29"  FontFamily="Bernard MT Condensed" FontSize="14" Click="konekButton_Click" Background="{x:Null}" BorderBrush="#FF3295D4" Foreground="#FF3295D4" Margin="34,169,220,194"/>
+                    <Button x:Name="konekButton"  Content="Hubungkan" Width="100" Height="29"  FontFamily="Bernard MT Condensed" FontSize="14" Click="konekButton_Click" Background="{x:Null}" BorderBrush="#FF3295D4" Foreground="#FF3295D4" Margin="-17,163,271,200"/>
                     <Label Content="SETTINGS" HorizontalAlignment="Left" Height="54" Margin="34,-128,0,0" VerticalAlignment="Top" Width="151" Foreground="#FF0186C6" FontFamily="Source Sans Pro Semibold" FontSize="30"/>
                 </Grid>
                 <Grid x:Name="gridUtama"  Grid.Row="0" Margin="321,136,682,200" Width="Auto" Height="Auto">
@@ -202,65 +211,9 @@
 
                 </Grid>
 
-                <Button x:Name="btnRefresh"  Content="" Margin="238,428,1093,306" ToolTip="Refresh" Click="btnRefresh_Click" BorderBrush="{x:Null}"  Foreground="{x:Null}">
-                    <!--<Button.Resources>
-                    <Style x:Key="FocusVisual">
-                        <Setter Property="Control.Template">
-                            <Setter.Value>
-                                <ControlTemplate>
-                                    <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                    <ImageBrush x:Key="Button.Static.Background" ImageSource="refresh.png" />
-                    <ImageBrush x:Key="Button.Static.Border" />
-                    <ImageBrush x:Key="Button.MouseOver.Background" ImageSource="refreshhover.png" />
-                    <ImageBrush x:Key="Button.MouseOver.Border" />
-                    <ImageBrush x:Key="Button.Pressed.Background" ImageSource="refreshhover.png" />
-                    <ImageBrush x:Key="Button.Pressed.Border" />
-                    <ImageBrush x:Key="Button.Disabled.Background" />
-                    <ImageBrush x:Key="Button.Disabled.Border" />
-                    <ImageBrush x:Key="Button.Disabled.Foreground" />
-                    <Style x:Key="refreshStyle" TargetType="{x:Type Button}">
-                        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
-                        <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
-                        <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
-                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-                        <Setter Property="BorderThickness" Value="1"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="Padding" Value="1"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
-                                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsDefaulted" Value="true">
-                                            <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                                        </Trigger>
-                                        <Trigger Property="IsMouseOver" Value="true">
-                                            <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
-                                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
-                                        </Trigger>
-                                        <Trigger Property="IsPressed" Value="true">
-                                            <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
-                                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
-                                        </Trigger>
-                                        <Trigger Property="IsEnabled" Value="false">
-                                            <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
-                                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
-                                            <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Button.Resources>-->
-                </Button>
+                <Button x:Name="btnRefresh"  Content="Refresh" Margin="229,423,1088,317" ToolTip="Refresh" Click="btnRefresh_Click"  Background="{x:Null}" BorderBrush="#FF3295D4" Foreground="#FF3295D4"/>
+
+
             </Grid>
         </Grid>
 

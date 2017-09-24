@@ -1,30 +1,20 @@
 ﻿using Microsoft.Maps.MapControl.WPF;
 using Microsoft.Research.DynamicDataDisplay.DataSources;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO.Ports;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using ULTRON_2016;
 using WebEye.Controls.Wpf;
-using HelixToolkit;
-using HelixToolkit.Wpf;
 using Microsoft.Research.DynamicDataDisplay;
 using System.IO;
+using System.Threading;
+using ULTRON_2016;
 
 namespace WSN_Forest_Project
 {
@@ -34,12 +24,11 @@ namespace WSN_Forest_Project
     public partial class MainWindow : Window
     {
         Koneksi konekin = new Koneksi();
-
         int interval = 500;
         KoleksiData.Sensor mySensorLog = new KoleksiData.Sensor();
 
-        DataTable table = new DataTable("Komurindo2016");
-        DataTable tableToSave = new DataTable("Komurindo2016");
+        DataTable table = new DataTable("WSNProject");
+        DataTable tableToSave = new DataTable("WSNProject");
 
         ObservableDataSource<Point> sourceYaw = new ObservableDataSource<Point>();
         ObservableDataSource<Point> sourcePitch = new ObservableDataSource<Point>();
@@ -85,6 +74,7 @@ namespace WSN_Forest_Project
         public int counterPushPin = 0;
         public double goalLat = 0;
         public double goalLong = 0;
+        public string dirgambar;
 
         public string logName = @"D:\wsnlog " + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Year.ToString() + " " + DateTime.Now.Hour.ToString() + "." + DateTime.Now.Minute.ToString() + "." + DateTime.Now.Second.ToString() + ".txt";
 
@@ -421,15 +411,29 @@ namespace WSN_Forest_Project
         {
             webCameraControl.StopCapture();
         }
+    
 
         private void OnImageButtonClick(object sender, RoutedEventArgs e)
         {
-            var dialog = new SaveFileDialog { Filter = "Bitmap Image|*.bmp" };
-            if (dialog.ShowDialog() == true)
-            {
-                webCameraControl.GetCurrentImage().Save(dialog.FileName);
-            }
+
+                if (comboPicture.SelectedIndex != 0)
+                {
+                    for (int t = 1; t <= comboPicture.SelectedIndex; t++)
+                    {
+                        dirgambar = @"D:\wsnlog\";
+                        webCameraControl.GetCurrentImage().Save(dirgambar+ t +".jpg");
+                        Thread.Sleep(1000 / comboPicture.SelectedIndex);
+                    }
+                }
+            
         }
+        //private void dirButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var dialog = new System.Windows.Forms.FolderBrowserDialog();
+        //    var dialog = new FolderBrowserDialog();
+        //    dirgambar = dialog.FileName;
+
+        //}
 
         void dispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -614,9 +618,8 @@ namespace WSN_Forest_Project
             initDelay();
             //initPortLaunch();
 
-            logFileName = "ULTRON Log " + DateTime.Now.Date.ToString("dd-MM-yyyy ") + DateTime.Now.Hour.ToString() + "." + DateTime.Now.Minute.ToString() + "." + DateTime.Now.Second.ToString() + ".xlsx";
+            logFileName = "WSN Log " + DateTime.Now.Date.ToString("dd-MM-yyyy ") + DateTime.Now.Hour.ToString() + "." + DateTime.Now.Minute.ToString() + "." + DateTime.Now.Second.ToString() + ".xlsx";
         }
-
 
 
         #endregion
