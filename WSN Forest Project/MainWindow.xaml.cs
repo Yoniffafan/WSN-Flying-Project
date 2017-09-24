@@ -513,7 +513,6 @@ namespace WSN_Forest_Project
             Komunikasi.Default.StopBits = (StopBits)Enum.Parse(typeof(StopBits), stopbitCombo.SelectedItem.ToString());
             Komunikasi.Default.Handshake = (Handshake)Enum.Parse(typeof(Handshake), handshakeCombo.SelectedItem.ToString());
             Komunikasi.Default.Parity = (Parity)Enum.Parse(typeof(Parity), parityCombo.SelectedItem.ToString());
-            Komunikasi.Default.Launcher = Convert.ToString(portLauncher.SelectedItem);
             interval = Convert.ToInt32(Convert.ToString(delayCombo.SelectedItem).Remove(5));
 
             //if (!Komunikasi.Default.terkoneksi)

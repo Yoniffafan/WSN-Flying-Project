@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ULTRON_2016" GeneratedClassName="Komunikasi">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WSN_Forest_Project" GeneratedClassName="Komunikasi">
   <Profiles />
   <Settings>
     <Setting Name="PortName" Type="System.String" Scope="User">
@@ -25,9 +25,6 @@
     </Setting>
     <Setting Name="Delay" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>
-    </Setting>
-    <Setting Name="Launcher" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

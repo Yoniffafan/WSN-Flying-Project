@@ -118,17 +118,5 @@ namespace WSN_Forest_Project {
                 this["Delay"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Launcher {
-            get {
-                return ((string)(this["Launcher"]));
-            }
-            set {
-                this["Launcher"] = value;
-            }
-        }
     }
 }
