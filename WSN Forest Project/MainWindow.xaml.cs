@@ -143,6 +143,12 @@ namespace WSN_Forest_Project
             this.Close();
         }
 
+        private void ButtonMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+
         private void yprButton_Click(object sender, RoutedEventArgs e)
         {
             yprButton.Background = ((Brush)(new BrushConverter().ConvertFrom("#FF1A60AB")));
@@ -621,6 +627,7 @@ namespace WSN_Forest_Project
             logFileName = "WSN Log " + DateTime.Now.Date.ToString("dd-MM-yyyy ") + DateTime.Now.Hour.ToString() + "." + DateTime.Now.Minute.ToString() + "." + DateTime.Now.Second.ToString() + ".xlsx";
         }
 
+  
 
         #endregion
 

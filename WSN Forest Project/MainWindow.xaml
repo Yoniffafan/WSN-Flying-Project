@@ -9,7 +9,7 @@
         xmlns:h="http://helix-toolkit.org/wpf"
         xmlns:d3="http://research.microsoft.com/DynamicDataDisplay/1.0"   
         mc:Ignorable="d"
-        Title="WSN Forest Project" Height="768" Width="1366" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" Background="#FF616161" Loaded="Window_Loaded">
+        Title="WSN Forest Project" Height="768" Width="1366" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None" Background="#FF616161" Loaded="Window_Loaded" Opacity="0.8">
     <Grid>
         <!--<Button x:Name="buttonMinimize" Content="-" HorizontalAlignment="Left" Height="20" Margin="367,10,0,0" VerticalAlignment="Top" Width="20" BorderBrush="#FF3994D7" Foreground="#FF3994D7" Click="ButtonMinimize_Click" Style="{DynamicResource ButtonStyle1}" Background="#FF313131" FontFamily="Wide Latin" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" Grid.Column="1">-->
         <Rectangle Fill="#FF464646" HorizontalAlignment="Left" Height="95" Margin="10,10,0,0" Stroke="#FF008CCF" VerticalAlignment="Top" Width="1346"/>
@@ -19,6 +19,7 @@
             </Label.Effect>
         </Label>
         <Button x:Name="buttonexit" Content="X" HorizontalAlignment="Left" Height="20" Margin="1336,10,0,0" VerticalAlignment="Top" Width="20" BorderBrush="#FF339CDF" Foreground="#FF339CDF" Click="Buttonexit_Click" Style="{DynamicResource Buttonexit}" Background="{x:Null}" BorderThickness="1" FontFamily="Segoe UI Semibold"/>
+        <Button x:Name="buttonMinimize" Content="-" HorizontalAlignment="Left" Height="20" Margin="1316,10,0,0" VerticalAlignment="Top" Width="20" BorderBrush="#FF339CDF" Foreground="#FF339CDF" Click="ButtonMinimize_Click" Style="{DynamicResource Buttonexit}" Background="{x:Null}" BorderThickness="1" FontFamily="Segoe UI Semibold"/>
 
 
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="836,151,22,282" Width="508">
