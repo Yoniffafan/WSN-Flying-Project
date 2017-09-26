@@ -77,6 +77,10 @@ namespace WSN_Forest_Project
         public double goalLong = 0;
         public string dirgambar;
 
+
+        public double latlongtomet = 111000;
+        public double jarak;
+
         public string logName = @"D:\wsnlog " + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Year.ToString() + " " + DateTime.Now.Hour.ToString() + "." + DateTime.Now.Minute.ToString() + "." + DateTime.Now.Second.ToString() + ".txt";
 
 
@@ -742,6 +746,8 @@ namespace WSN_Forest_Project
 
             mySensorLog.Latitude = float.Parse(data[5], System.Globalization.CultureInfo.InvariantCulture).ToString();
             mySensorLog.Longitude = float.Parse(data[6], System.Globalization.CultureInfo.InvariantCulture).ToString();
+
+            //jarak = 
         }
         void map()
         {
