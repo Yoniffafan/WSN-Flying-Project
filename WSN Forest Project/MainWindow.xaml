@@ -32,6 +32,14 @@
                 <ComboBoxItem Content="4"/>
                 <ComboBoxItem Content="5"/>
             </ComboBox>
+            <!--<ComboBox x:Name="combosecond" Width="104" Margin="0,299,0,0" SelectedIndex="0" >
+                <ComboBoxItem Content="second"/>
+                <ComboBoxItem Content="1"/>
+                <ComboBoxItem Content="3"/>
+                <ComboBoxItem Content="5"/>
+                <ComboBoxItem Content="10"/>
+                <ComboBoxItem Content="20"/>
+            </ComboBox>-->
             <Button x:Name="startButton" Content="Start" Width="54" Margin="4,0,0,0" IsEnabled="False" Click="OnStartButtonClick" Foreground="#FF040404" Height="36" VerticalAlignment="Bottom" />
             <Button x:Name="stopButton" Content="Stop" Width="52" Margin="4,299,0,0" IsEnabled="{Binding IsCapturing, ElementName=webCameraControl}" Click="OnStopButtonClick" />
             <Button x:Name="imageButton" Content="capture" Width="56" Margin="4,299,0,0" IsEnabled="{Binding IsCapturing, ElementName=webCameraControl}" Click="OnImageButtonClick" Height="36" VerticalAlignment="Top" />

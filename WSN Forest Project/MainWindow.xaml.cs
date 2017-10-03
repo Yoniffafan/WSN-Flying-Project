@@ -78,13 +78,12 @@ namespace WSN_Forest_Project
         public double goalLong = 0;
         public string dirgambar;
 
-
         public double latlongtomet = 111000;
         public double jarak;
 
-        public string logName = @"D:\wsnlog " + DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Year.ToString() + " " + DateTime.Now.Hour.ToString() + "." + DateTime.Now.Minute.ToString() + "." + DateTime.Now.Second.ToString() + ".txt";
+        public string logName = Path.Combine(Environment.CurrentDirectory, DateTime.Now.Day.ToString() + "-" + DateTime.Now.Month.ToString() + "-" + DateTime.Now.Year.ToString() + " " + DateTime.Now.Hour.ToString() + "." + DateTime.Now.Minute.ToString() + "." + DateTime.Now.Second.ToString() + ".txt");
 
-
+        MapPolyline myPolyline = new MapPolyline();
 
         //MapPolyline myPolyline = new MapPolyline();
 
@@ -476,7 +475,7 @@ namespace WSN_Forest_Project
                     Directory.CreateDirectory(path);
                     string imgpath = Path.Combine(Environment.CurrentDirectory, @"ImgLog\", logimgFileName);
                     webCameraControl.GetCurrentImage().Save(imgpath);
-                    terminalText.AppendText(t + ". " + logimgFileName + "captured" + Environment.NewLine);
+                    terminalText.AppendText(t + ". " + logimgFileName + " captured" + Environment.NewLine);
                     //Thread.Sleep(1000 / comboPicture.SelectedIndex);
                     await Task.Delay(1000 / comboPicture.SelectedIndex);
                 }
@@ -636,6 +635,7 @@ namespace WSN_Forest_Project
  
 
                                 map();
+                                putar3d();
                                 //putar_Rocket3D();
 
                                 /*  dataLat = float.Parse(mySensorLog.Latitude);
@@ -698,6 +698,7 @@ namespace WSN_Forest_Project
             lblTimer.Content = FormatTime(stopwatch.Elapsed.Hours) + ":" + FormatTime(stopwatch.Elapsed.Minutes) + ":" + FormatTime(stopwatch.Elapsed.Seconds);
 
         }
+
 
         void bar()
         {
@@ -782,8 +783,8 @@ namespace WSN_Forest_Project
                 dataPertama = false;
             }
             MyPushPin.Location = location;
-            //myPolyline.Locations.Add(new Location(latitude, longitude));
-            //MyMap.Children.Add(myPolyline);
+            myPolyline.Locations.Add(new Location(latitude, longitude));
+            MyMap.Children.Add(myPolyline);
             MyMap.Center = location;
             lblLatitude.Content = mySensorLog.Latitude;
             lblLongitude.Content = mySensorLog.Longitude;
