@@ -16,6 +16,7 @@ using Microsoft.Research.DynamicDataDisplay;
 using System.IO;
 using System.Threading;
 using ULTRON_2016;
+using System.Threading.Tasks;
 
 namespace WSN_Forest_Project
 {
@@ -458,21 +459,39 @@ namespace WSN_Forest_Project
         {
             webCameraControl.StopCapture();
         }
-    
 
-        private void OnImageButtonClick(object sender, RoutedEventArgs e)
+
+        private async void OnImageButtonClick(object sender, RoutedEventArgs e)
         {
 
-                if (comboPicture.SelectedIndex != 0)
+            if (comboPicture.SelectedIndex != 0)
+            {
+                //try
+                //{
+                terminalText.AppendText("start capturing..." + Environment.NewLine);
+                string path = Path.Combine(Environment.CurrentDirectory, @"ImgLog\");
+                for (int t = 1; t <= comboPicture.SelectedIndex; t++)
                 {
-                    for (int t = 1; t <= comboPicture.SelectedIndex; t++)
-                    {
-                        dirgambar = @"D:\wsnlog\";
-                        webCameraControl.GetCurrentImage().Save(dirgambar+ t +".jpg");
-                        Thread.Sleep(1000 / comboPicture.SelectedIndex);
-                    }
+                    string logimgFileName = "Img " + DateTime.Now.Date.ToString("dd-MM-yyyy ") + DateTime.Now.Hour.ToString() + "_" + DateTime.Now.Minute.ToString() + "_" + DateTime.Now.Second.ToString() + "_" + DateTime.Now.Millisecond.ToString() + ".jpg";
+                    Directory.CreateDirectory(path);
+                    string imgpath = Path.Combine(Environment.CurrentDirectory, @"ImgLog\", logimgFileName);
+                    webCameraControl.GetCurrentImage().Save(imgpath);
+                    terminalText.AppendText(t + ". " + logimgFileName + "captured" + Environment.NewLine);
+                    //Thread.Sleep(1000 / comboPicture.SelectedIndex);
+                    await Task.Delay(1000 / comboPicture.SelectedIndex);
                 }
-            
+                terminalText.AppendText("file saved on " + path + Environment.NewLine);
+                //}
+                //   catch
+                //{
+
+                //}
+            }
+            else
+            {
+                MessageBox.Show("Pilih banyak capture/s", "Important Message");
+            }
+
         }
         //private void dirButton_Click(object sender, RoutedEventArgs e)
         //{
@@ -528,14 +547,15 @@ namespace WSN_Forest_Project
         #endregion
 
         #region terminal
+
         private void terminalText_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             try
             {
                 if (!e.Key.Equals(Key.Return))
                 {
-                    //e.Handled = true;
-                    //konekin.tulis(e.Key.ToString().ToLower());
+                    e.Handled = true;
+                    konekin.tulis(e.Key.ToString().ToLower());
                 }
             }
             catch (Exception)
@@ -543,6 +563,7 @@ namespace WSN_Forest_Project
 
             }
         }
+  
         #endregion
 
         #region koneksi
@@ -816,6 +837,37 @@ namespace WSN_Forest_Project
                 }
             }
             catch { }
+        }
+
+        void putar3d()
+        {
+            double yaw = Math.Ceiling(mySensorLog.Yaw);
+            double pitch = Math.Ceiling(mySensorLog.Pitch);
+            double roll = Math.Ceiling(mySensorLog.Roll);
+
+            Vector3D axisYaw = new Vector3D(0, 0, -1);
+            Vector3D axisPitch = new Vector3D(1, 0, 0);
+            Vector3D axisRoll = new Vector3D(0, 1, 0);
+
+            Transform3DGroup group = new Transform3DGroup();
+
+            QuaternionRotation3D r;
+
+            try
+            {
+                r = new QuaternionRotation3D(new Quaternion(axisYaw, pitch));//(new Vector3D(0, 1, 0), yaw));
+                group.Children.Add(new RotateTransform3D(r));
+                r = new QuaternionRotation3D(new Quaternion(axisPitch, -yaw));//(new Vector3D(1, 0, 0), pitch));
+                group.Children.Add(new RotateTransform3D(r));
+                r = new QuaternionRotation3D(new Quaternion(axisRoll, roll));//(new Vector3D(0, 0, 1), roll));
+                group.Children.Add(new RotateTransform3D(r));
+                rocket3D.Transform = group;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+
         }
         #endregion
 
