@@ -49,10 +49,12 @@
         <wpf:WebCameraControl x:Name="webCameraControl" Margin="836,117,22,326" />
 
 
-        <m:Map x:Name="MyMap" Mode="AerialWithLabels" CredentialsProvider="AvjWVfC37-4vYI8-0pPJV2pj1DfsZ1YtEEid0EE137or_spv_i13jqR7cXm4Fzbl" ZoomLevel="14" Center="-7.762180, 110.275274" Margin="577,117,557,282">
-            <m:Pushpin x:Name="FinishPin" Location="-7.649386, 107.689141" Background="Red"/>
-            <m:Pushpin x:Name="MyPushPin" Location="-7.647386, 107.688141" Background="Green"/>
+        <m:Map x:Name="MyMap" Mode="AerialWithLabels" CredentialsProvider="ec6DbKy145Vl1bqwdcul~CbewK92O_Lj63tUfmTQ3Tw~Aipdlr68xvT7Ux2-dJ2zWQ4zXiCJSyC-69zJ7gFJ12c42PfpBhgf3QWqmDFnj2B_" ZoomLevel="14" Center="-7.4406962, 109.2452032" Margin="577,117,557,326">
+            <m:Pushpin x:Name="DefaultPin" Location="-7.4406962, 109.2452032" Background="Red"/>
+            <m:Pushpin x:Name="MyPushPin" Location="-7.4409900, 109.2453100" Background="Green"/>
         </m:Map>
+        <Button x:Name="defaultlocbtn"  Content="set default location" Height="29"  FontFamily="Bernard MT Condensed" FontSize="14" Background="{x:Null}" BorderBrush="#FF3295D4" Foreground="#FF3295D4" Margin="577,457,557,282" Click="defaultlocbtn_Click"/>
+
 
 
         <Grid x:Name="GridGrafik" Margin="-24,260,442,0">

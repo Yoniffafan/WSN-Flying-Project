@@ -636,24 +636,7 @@ namespace WSN_Forest_Project
 
                                 map();
                                 putar3d();
-                                //putar_Rocket3D();
 
-                                /*  dataLat = float.Parse(mySensorLog.Latitude);
-                                  dataLong = float.Parse(mySensorLog.Longitude);
-                                  //MyMap.Center.Latitude = dataLat;
-                                  lblLatitude.Content = dataLat;
-
-                                  //MyMap.Center.Longitude = dataLong;
-                                  lblLongitude.Content = dataLong;
-                                  /*   recentLocation = new Location(dataLat, dataLong);
-                                     locationLog.Add(recentLocation);
-
-                                     MyMap.Center = recentLocation;
-                                     MyMap.Children.Clear();
-                                     MyMap.Children.Add(polyline);
-                                     MyMap.Children.Add(pushpin);
-                                     pushpin.Location = recentLocation;
-                                     */
 
                             }
                             catch (Exception) { }
@@ -699,6 +682,23 @@ namespace WSN_Forest_Project
 
         }
 
+        private void defaultlocbtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            try
+            {
+                double latitude = Convert.ToDouble(data[5]);
+                double longitude = Convert.ToDouble(data[6]);
+                location = new Location(latitude, longitude);
+                DefaultPin.Location = location;
+                terminalText.AppendText("set default location at " + latitude + "," + longitude + Environment.NewLine);
+            }
+            catch (Exception eee)
+            {
+                terminalText.AppendText(eee.Message.ToString() + Environment.NewLine);
+            }
+        
+        }
 
         void bar()
         {
