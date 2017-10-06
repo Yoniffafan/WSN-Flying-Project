@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO.Ports;
 using WSN_Forest_Project;
+using System.Windows.Threading;
 
 namespace ULTRON_2016
 {
@@ -136,15 +137,22 @@ namespace ULTRON_2016
 
         void komSerial_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            try
+            //Application.Current.Dispatcher.Invoke((Action)(() =>
+            //{
+            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(delegate ()
             {
-                string hasilSerial = komSerial.ReadLine();
-                lemparKeEvent(hasilSerial);
-            }
-            catch (Exception)
-            {
-                //MessageBox.Show(ex.Message.ToString());
-            }
+                try
+                {
+                    string hasilSerial = komSerial.ReadLine();
+                    lemparKeEvent(hasilSerial);
+                }
+                catch (Exception)
+                {
+                    //MessageBox.Show(ex.Message.ToString());
+                }
+
+            }));
+
 
         }
 

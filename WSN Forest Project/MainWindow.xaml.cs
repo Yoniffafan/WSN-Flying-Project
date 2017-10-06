@@ -609,7 +609,9 @@ namespace WSN_Forest_Project
 
         void konekin_NewSerialDataReceived(object sender, Koneksi.SerialDataEventArgs e)
         {
-            string pesan = e.Data;
+            this.Dispatcher.Invoke(DispatcherPriority.Send, new Action(delegate ()
+            {
+                string pesan = e.Data;
 
             try
             {
@@ -617,45 +619,47 @@ namespace WSN_Forest_Project
          
                 if (data[0] == "u")
                 {
-                    try
-                    {
-                        this.Dispatcher.Invoke(DispatcherPriority.Render, new Action(delegate ()
-                        {
+                    //try
+                    //{
+                    //    this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate ()
+                    //    {
                             try
                             {
-                                bar();
-                                timer();
-                                terminalText.AppendText("u" + " " + lblYaw.Content + " " + lblPitch.Content + " " + lblRoll.Content + " " + lblKetinggian.Content + " " + data[5] + " " + data[6] + " " + data[7] + " " + data[8] + Environment.NewLine);
+                              
+
+
+                                    bar();
+                                    timer();
+                                    map();
+                                    putar3d();
+
+                                terminalText.AppendText("u" + " " + lblYaw.Content + " " + lblPitch.Content + " " + lblRoll.Content + " " + lblKetinggian.Content + " " + data[5] + " " + data[6] + " " + data[7] + " " + data[8] + " " + data[9]);
                                 // terminalText.AppendText("u" + " " + q0 + " " + q1 + " " + q2 + " " + q3  + Environment.NewLine);
 
                                 terminalText.SelectionStart = terminalText.Text.Length;
                                 terminalText.CaretIndex = terminalText.Text.Length;
                                 terminalText.ScrollToEnd();
-
- 
-
-                                map();
-                                putar3d();
-
+                 
 
                             }
                             catch (Exception) { }
-                        }));
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString());
-                    }
+                    //    }));
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    MessageBox.Show(ex.ToString());
+                    //}
                 }
                 else
                 {
-                    terminalText.AppendText(pesan + Environment.NewLine);
+                   terminalText.AppendText(pesan + Environment.NewLine);
                     terminalText.SelectionStart = terminalText.Text.Length;
                     terminalText.CaretIndex = terminalText.Text.Length;
                     terminalText.ScrollToEnd();
                 }
             }
             catch (Exception) { }
+            }));
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
