@@ -13,7 +13,7 @@
     <Grid>
         <!--<Button x:Name="buttonMinimize" Content="-" HorizontalAlignment="Left" Height="20" Margin="367,10,0,0" VerticalAlignment="Top" Width="20" BorderBrush="#FF3994D7" Foreground="#FF3994D7" Click="ButtonMinimize_Click" Style="{DynamicResource ButtonStyle1}" Background="#FF313131" FontFamily="Wide Latin" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" Grid.Column="1">-->
         <Rectangle Fill="#FF464646" HorizontalAlignment="Left" Height="95" Margin="10,10,0,0" Stroke="#FF008CCF" VerticalAlignment="Top" Width="1346"/>
-        <Label Content="GROUND CONTROL SYSTEM" HorizontalAlignment="Left" Height="59" Margin="333,27,0,0" VerticalAlignment="Top" Width="639" Foreground="#FF008CCF" FontFamily="replay" FontSize="48">
+        <Label Content="GROUND CONTROL STATION" HorizontalAlignment="Left" Height="59" Margin="333,27,0,0" VerticalAlignment="Top" Width="639" Foreground="#FF008CCF" FontFamily="replay" FontSize="48">
             <Label.Effect>
                 <DropShadowEffect Color="#FF424242" ShadowDepth="10"/>
             </Label.Effect>
